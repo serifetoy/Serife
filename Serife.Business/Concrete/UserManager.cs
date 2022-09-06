@@ -43,7 +43,7 @@ namespace Serife.Business.Concrete
 
 
             entity.Name = dto.Name;
-            entity.Surname = dto.Surname;.
+            entity.Surname = dto.Surname;
             entity.Username = dto.Username;
             entity.Email = dto.Email;
             entity.Password = dto.Password;
@@ -149,23 +149,35 @@ namespace Serife.Business.Concrete
 
         }
 
-
-        public List<User> GetUsers()
+        public BCResponse GetUsers(UserDTO dto)
         {
             return chatAppContext.Set<User>().ToList();
 
         }
 
-        public User? GetById(int id)
+        public BCResponse GetById(int userId)
         {
+            var result = _dalUser.GetById(userId);
 
-            return chatAppContext.Set<User>().FirstOrDefault(x => x.UserId == id);
+            if (result!=null)
+            {
+                return new BCResponse() { Value = result };
+            }
+
+            return new BCResponse() { Errors = "Kullanıcı Bulunamadı" };
         }
 
-        public User? GetByUserName(string username)
+        public BCResponse GetByUserName(string username)
         {
 
-            return chatAppContext.Set<User>().FirstOrDefault(x => x.Username == username);
+            var result = _dalUser.GetByUserName(username);
+
+            if (result != null)
+            {
+                return new BCResponse() { Value = result };
+            }
+
+            return new BCResponse() { Errors = "Kullanıcı Bulunamadı" };
         }
 
 

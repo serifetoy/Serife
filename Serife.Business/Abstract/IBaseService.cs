@@ -11,6 +11,6 @@ namespace Serife.Business.Abstract
     {
         BCResponse Add(DTO dto);
         BCResponse Update(DTO dto);
-        BCResponse Delete(int id);
+        BCResponse Delete(int userId);
     }
 }

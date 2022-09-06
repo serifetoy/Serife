@@ -61,17 +61,45 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet("{userID}")]
+        [HttpGet("User/{userID}")]
 
-        public IActionResult GetById(int userID)
+        public IActionResult GetById(int userId)
         {
-             User? user  = _userManager.GetById(userID);
-            if (user.Errors != null)
+             var result  =_userManager.GetById(userId);
+            if (result.Errors != null)
             {
-                return NotFound(user.Errors);
+                return NotFound(result.Errors);
 
             }
-            return Ok(user.Value);
+            return Ok(result.Value);
         }
+
+        [HttpGet("User/{username}")]
+
+        public IActionResult GetByUserName(string userName)
+        {
+            var result = _userManager.GetByUserName(userName);
+            if (result.Errors != null)
+            {
+                return NotFound(result.Errors);
+
+            }
+            return Ok(result.Value);
+        }
+
+        [HttpGet("User/{username}")]
+
+        public IActionResult GetUsers(UserDTO dto)
+        {
+            var result = _userManager.GetUsers(dto);
+            if (result.Errors != null)
+            {
+                return NotFound(result.Errors);
+
+            }
+            return Ok(result.Value);
+        }
+
+
     }
 }

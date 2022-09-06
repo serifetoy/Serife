@@ -28,7 +28,7 @@ namespace Serife.DataLayer
             return null;
         }
 
-        public List<Complain> GetComplainByUserID2(int id)
+        public List<Complain> GetComplainByUserID(int id)
         {
             return chatAppContext.Set<Complain>().Where(x => x.ComplainantUserId == id).ToList();
         }

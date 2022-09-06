@@ -11,37 +11,54 @@ using System.Threading.Tasks;
 
 namespace Serife.Business.Concrete
 {
-   
-        public class ComplainManager : IComplainService
+
+    public class ComplainManager : IComplainService
+    {
+        DalComplain _dalComplain;
+
+        public ComplainManager(DalComplain dalComplain)
         {
+            _dalComplain = dalComplain;
+        }
 
-            DalComplain _dalComplain;
+        ChatAppContext chatAppContext = new ChatAppContext();
 
-            public ComplainManager(DalComplain dalComplain)
+        public BCResponse Add(ComplainDTO dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BCResponse Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BCResponse GetById(int complainId)
+        {
+            var result = _dalComplain.GetById(complainId);
+
+            if (result != null)
             {
-                _dalComplain = dalComplain;
+                return new BCResponse() { Value = result };
             }
 
-            public BCResponse Add(ComplainDTO dto)
-            {
-                throw new NotImplementedException();
-            }
+            return new BCResponse() { Errors = "Kullanıcı Bulunamadı" };      
 
-            public BCResponse Delete(int id)
-            {
-                throw new NotImplementedException();
-            }
+        }
+
+        public List<Complain> GetComplainByUserID(int id)
+        {
+            return chatAppContext.Set<Complain>().
+                    Where(x => x.ComplainedOfUserId == id).
+                    ToList();
+        }
+
+        public List<Complain> GetListAll()
+        {
+            return chatAppContext.Set<Complain>().ToList();
+        }
+
         public BCResponse Update(ComplainDTO dto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BCResponse GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Complain> GetComplainByUserId(int userId)
         {
             throw new NotImplementedException();
         }
@@ -49,7 +66,14 @@ namespace Serife.Business.Concrete
         public BCResponse Update(Complain complain)
         {
             throw new NotImplementedException();
-        }//burda hata var BAK
+        }//burda bende hata var ben yanlış bişi eklemiştim sonra düzelticem
+
+        public List<Complain> GetComplainByUserId(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 
 }
