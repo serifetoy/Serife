@@ -11,66 +11,86 @@ using System.Threading.Tasks;
 
 namespace Serife.Business.Concrete
 {
-    public class MessageManager : IMessageService
-    {
-        ChatAppContext chatAppContext = new ChatAppContext();
-        DalMessage _dalMessage;
+   
+        public class MessageManager : IMessageService
+        {
+            ChatAppContext chatAppContext = new ChatAppContext();
+            DalMessage _dalMessage;
 
-        public MessageManager(DalMessage dalMessage)
-        {
-            _dalMessage = dalMessage;
-        }
-
-        public BCResponse Add(MessageDTO dto)
-        {
-            throw new NotImplementedException();
-        }
-        public BCResponse Update(MessageDTO dto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BCResponse Delete(int id)
-        {
-            #region Business
-            if (id <= 0)
+            public MessageManager(DalMessage dalMessage)
             {
-                return new BCResponse() { Errors = "hatalı veri" };
+                _dalMessage = dalMessage;
             }
-            #endregion
-            #region Delete
-            Message? entity = chatAppContext.Messages.
-                               FirstOrDefault(u => u.MessageId == id);
 
-            if (entity != null)
+            public BCResponse Add(MessageDTO dto)
             {
-                _dalMessage.Delete(entity);
-                return new BCResponse() { Value = entity };
+                throw new NotImplementedException();
+            }
+
+            public BCResponse Update(MessageDTO dto)
+            {
+                throw new NotImplementedException();
+            }
+
+            public BCResponse Delete(int id)
+            {
+                #region Business
+                if (id <= 0)
+                {
+                    return new BCResponse() { Errors = "hatalı veri" };
+                }
+                #endregion
+                #region Delete
+                Message? entity = chatAppContext.Messages.
+                                   FirstOrDefault(u => u.MessageId == id);
+
+                if (entity != null)
+                {
+                    _dalMessage.Delete(entity);
+                    return new BCResponse() { Value = entity };
+
+                }
+                #endregion
+                return new BCResponse() { Errors = "Mesaj silinemedi" };
+
 
             }
-            #endregion
-            return new BCResponse() { Errors = "Mesaj silinemedi" };
+
+            public BCResponse GetGroupMessage(int SenderId, int GroupId)
+            {
+                var groupResult = _dalMessage.GetBy(groupId: GroupId);
+                var senderResult = _dalMessage.GetBy(senderId: SenderId);
+
+
+                if (groupResult != null && senderResult != null)
+                {
+                    return new BCResponse() { Value = senderResult };
+                }
+                return new BCResponse() { Errors = "Group Mesajı alınamadı" };
+            }
+
+            public BCResponse GetPrivateMessage(int SenderId, int ReceiverId)
+            {
+                var senderResult = _dalMessage.GetBy(senderId: SenderId);
+                var receiverResult = _dalMessage.GetBy(receiverId: ReceiverId);
+
+
+                if ((senderResult != null && receiverResult == null) || (senderResult != null && receiverResult != null))
+                {
+                    return new BCResponse() { Value = senderResult };
+                }
+                return new BCResponse() { Errors = "Gizli Mesaj alınamadı" };
+            }
+
+
+            public BCResponse SendMessage(Message message)//burayı düzenle
+            {
+
+            throw new NotImplementedException();
+
 
 
         }
-
-        List<Message> IMessageService.GetPrivateMessage(int senderId, int receiverId)
-        {
-            return chatAppContext.Set<Message>()
-                                 .Where(m => m.SenderId == senderId && m.ReceiverId == receiverId)
-                                 .ToList();
         }
-
-        List<Message> IMessageService.GetGroupMessage(int senderId, int groupId)
-        {
-            return chatAppContext.Set<Message>()
-                               .Where(m => m.SenderId == senderId && m.GroupId == groupId)
-                               .ToList();
-        }
-
-
-       
-
-       
     }
-}
+

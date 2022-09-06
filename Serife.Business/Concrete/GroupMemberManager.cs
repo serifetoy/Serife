@@ -47,9 +47,10 @@ namespace Serife.Business.Concrete
             throw new NotImplementedException();
         }
 
-        public List<GroupMember> GetListAll()
+        public BCResponse GetListAll()
         {
-            return chatAppContext.Set<GroupMember>().ToList();
+            // return chatAppContext.Set<GroupMember>().ToList();
+            throw new NotImplementedException();
 
         }
     }

@@ -10,18 +10,10 @@ using System.Threading.Tasks;
 namespace Serife.Business.Abstract
 {
     public interface IComplainService : IBaseService <ComplainDTO>
-    {
-        BCResponse Add(ComplainDTO complainDTO);
-        BCResponse Delete(int id);
-        BCResponse Update(Complain complain);
-
+    {  
         // BCResponse GetAll(Expression<Func>Complain, bool>>filter=null);
-
-        List<Complain> GetComplainByUserId(int userId);
-
-        BCResponse GetById(int id);
-
-
-
+        BCResponse GetById(int userId);
+        BCResponse GetListAll();
+        BCResponse GetComplainByUserId(int userId);
     }
 }

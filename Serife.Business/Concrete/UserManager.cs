@@ -149,10 +149,16 @@ namespace Serife.Business.Concrete
 
         }
 
-        public BCResponse GetUsers(UserDTO dto)
+        public BCResponse GetUsers(UserDTO dto)//burayı düzenle
         {
-            return chatAppContext.Set<User>().ToList();
-
+            //return chatAppContext.Set<User>().ToList();
+            //throw new NotImplementedException();
+            var result = _dalUser.GetUsers();
+            if (result.Count > 0)
+            {
+                return new BCResponse() { Value = result };
+            }
+            return new BCResponse() { Errors = "Kayıt Bulunamadı" };
         }
 
         public BCResponse GetById(int userId)

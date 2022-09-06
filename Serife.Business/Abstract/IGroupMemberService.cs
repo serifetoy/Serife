@@ -1,4 +1,5 @@
 ﻿using Serife.Common.DTOs;
+using Serife.Common.Result;
 using Serife.DataLayer.Entity;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,6 @@ namespace Serife.Business.Abstract
 {
     public interface IGroupMemberService : IBaseService <GroupMemberDTO>
     {
-        List<GroupMember> GetListAll();
+        BCResponse GetListAll();
     }
 }

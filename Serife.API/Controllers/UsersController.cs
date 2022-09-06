@@ -65,7 +65,7 @@ namespace Serife.API.Controllers
 
         public IActionResult GetById(int userId)
         {
-             var result  =_userManager.GetById(userId);
+            var result = _userManager.GetById(userId);
             if (result.Errors != null)
             {
                 return NotFound(result.Errors);
@@ -87,18 +87,18 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet("User/{username}")]
+        //[HttpGet("User/{username}")]
 
-        public IActionResult GetUsers(UserDTO dto)
-        {
-            var result = _userManager.GetUsers(dto);
-            if (result.Errors != null)
-            {
-                return NotFound(result.Errors);
+        //public IActionResult GetUsers(UserDTO dto)
+        //{
+        //    var result = _userManager.GetUsers(dto);
+        //    if (result.Errors != null)
+        //    {
+        //        return NotFound(result.Errors);
 
-            }
-            return Ok(result.Value);
-        }
+        //    }
+        //    return Ok(result.Value);
+        //}
 
 
     }

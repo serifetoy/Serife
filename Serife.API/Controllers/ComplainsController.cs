@@ -10,11 +10,13 @@ namespace Serife.API.Controllers
     [ApiController]
     public class ComplainsController : ControllerBase
     {
-        IComplainService _complainService;
+       
         ComplainManager _complainManager;
-        public ComplainsController(IComplainService complainService)
+        
+
+        public ComplainsController(ComplainManager complainManager)
         {
-            _complainService = complainService;
+            _complainManager = complainManager;
         }
 
 
@@ -62,35 +64,22 @@ namespace Serife.API.Controllers
 
         [HttpGet("user/{userID}/Complain")]
 
-        //public IActionResult GetComplainByUserId(int userId)
-        //{
-        //    var result = _complainManager.GetComplainByUserId(userId);
-        //    if (result.Errors != null)
-        //    {
-        //        return NotFound(result.Errors);
-
-        //    }
-        //    return Ok(result.Value); 
-        //} //liste döndürme hatası, complainmanager BCResponse yapılmalı fonksiyon değiştirilmeli
-
-        [HttpGet("Complain/{complainID}")]
-
-        public IActionResult GetById(int complainId)
+        public IActionResult GetComplainByUserId(int userId)
         {
-            var result = _complainManager.GetById(complainId);
+            var result = _complainManager.GetComplainByUserId(userId);
             if (result.Errors != null)
             {
                 return NotFound(result.Errors);
 
             }
             return Ok(result.Value);
-        }
+        } //liste döndürme hatası, complainmanager BCResponse yapılmalı fonksiyon değiştirilmeli
 
         //[HttpGet("Complain/{complainID}")]
-
-        //public IActionResult GetListAll(int complainId)
+        //
+        //public IActionResult GetById(int complainId)
         //{
-        //    var result = _complainManager.GetListAll(complainId);
+        //    var result = _complainManager.GetById(complainId);
         //    if (result.Errors != null)
         //    {
         //        return NotFound(result.Errors);
@@ -98,6 +87,19 @@ namespace Serife.API.Controllers
         //    }
         //    return Ok(result.Value);
         //}
+
+        [HttpGet("Complain/{complainID}")]
+
+        public IActionResult GetListAll()
+        {
+            var result = _complainManager.GetListAll();
+            if (result.Errors != null)
+            {
+                return NotFound(result.Errors);
+
+            }
+            return Ok(result.Value);
+        }
 
     }
 }

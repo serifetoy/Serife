@@ -21,8 +21,6 @@ namespace Serife.Business.Concrete
             _dalFriend = dalFriend;
         }
 
-
-
         public BCResponse Add(FriendDTO dto)
         {
             #region Business
@@ -119,11 +117,14 @@ namespace Serife.Business.Concrete
 
         }
 
-        public List<Friend> GetList(int id)
+        public BCResponse GetList(int id)
         {
-            return chatAppContext.Set<Friend>()
-                                 .Where(x => x.FriendId == id)
-                                 .ToList();
+            var result =_dalFriend.GetList(id);
+            if (result.Count>0)
+            {
+                return new BCResponse() { Value = result };
+            }
+            return new BCResponse() { Errors = "Kayıt Bulunamadı" };
         }
 
 

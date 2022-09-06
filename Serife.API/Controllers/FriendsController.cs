@@ -12,18 +12,21 @@ namespace Serife.API.Controllers
     [ApiController]
     public class FriendsController : ControllerBase
     {
-        IFriendService _friendService;
 
-        public FriendsController(IFriendService friendService)
+        FriendManager _friendManager;
+
+        public FriendsController(FriendManager friendManager)
         {
-            _friendService = friendService;
+            _friendManager = friendManager;
         }
+
+      
 
         [HttpPost("Add")]
 
         public IActionResult Add([FromBody] FriendDTO dto)
         {
-            var result = _friendService.Add(dto);
+            var result = _friendManager.Add(dto);
             if (result.Errors != null)
             {
                 return NotFound(result.Value);
@@ -32,12 +35,12 @@ namespace Serife.API.Controllers
             return NotFound(result.Errors);
         }
 
-        
+
         //[HttpPut("Update")]
 
-        //public IActionResult Update(string friend )//?
+        //public IActionResult Update(string friend)//?
         //{
-        //    var result = FriendManager.Update(friend);
+        //    var result = _friendManager.Update(friend);
         //    if (result.Errors != null)
         //    {
         //        return NotFound(result.Errors);
@@ -49,9 +52,9 @@ namespace Serife.API.Controllers
 
         //[HttpDelete("Delete")]
 
-        //public IActionResult Delete([FromBody] FriendId friendId)
+        //public IActionResult Delete([FromBody] FriendDTO friendId)
         //{
-        //    var result = _friendService.Delete(friendId);
+        //    var result = _friendManager.Delete(friendId);
         //    if (result.Errors != null)
         //    {
         //        return NotFound(result.Value);
@@ -59,20 +62,20 @@ namespace Serife.API.Controllers
         //    }
         //    return NotFound(result.Errors);
         //}
-        
-     
-        //[HttpGet("GetList")]
 
-        //public IActionResult GetList([FromBody] int UserId)
-        //{
-        //    var result = FriendManager.GetList(UserId);
-        //    if (result.Errors != null)
-        //    {
-        //        return NotFound(result.Errors);
 
-        //    }
-        //    return Ok(result.Value);//return olarak liste döndürülmeli yapamadım
-        //}
+        [HttpGet("GetList")]
+
+        public IActionResult GetList( int UserId)
+        {
+            var result = _friendManager.GetList(UserId);
+            if (result.Errors != null)
+            {
+                return NotFound(result.Errors);
+
+            }
+            return Ok(result.Value);//return olarak liste döndürülmeli yapamadım
+        }
 
     }
 

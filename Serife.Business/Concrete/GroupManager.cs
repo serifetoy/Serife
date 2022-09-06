@@ -126,14 +126,30 @@ namespace Serife.Business.Concrete
 
         }
 
-        public List<Group> GetList(int id)
+        public BCResponse GetBy(int userId)//BAKILMASI LAZIM 
         {
-            return chatAppContext.Set<Group>()
-                                 .Where(x => x.GroupId == id)
-                                 .ToList();
+            var result = _dalGroup.GetBy(userId);
+
+            if (result != null)
+            {
+                return new BCResponse() { Value = result };
+            }
+
+            return new BCResponse() { Errors = "Kullanıcı Bulunamadı" };
+        }
+        public BCResponse GetList(int userId)
+        {
+            var result = _dalGroup.GetList(userId);
+            if (result.Count > 0)
+            {
+                return new BCResponse() { Value = result };
+            }
+            return new BCResponse() { Errors = "Kayıt Bulunamadı" };
         }
 
-
-
+        BCResponse IGroupService.GetList(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

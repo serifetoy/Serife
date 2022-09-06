@@ -45,35 +45,33 @@ namespace Serife.Business.Concrete
             return new BCResponse() { Errors = "Kullanıcı Bulunamadı" };      
 
         }
-
-        public List<Complain> GetComplainByUserID(int id)
+        public BCResponse GetListAll()
         {
-            return chatAppContext.Set<Complain>().
-                    Where(x => x.ComplainedOfUserId == id).
-                    ToList();
-        }
-
-        public List<Complain> GetListAll()
-        {
-            return chatAppContext.Set<Complain>().ToList();
-        }
+            var result = _dalComplain.GetListAll();
+            if (result.Count > 0)
+            {
+                return new BCResponse() { Value = result };
+            }
+            return new BCResponse() { Errors = "Kayıt Bulunamadı" };
+        }//burayı düzenle,liste dönmesi lazım
 
         public BCResponse Update(ComplainDTO dto)
         {
             throw new NotImplementedException();
         }
 
-        public BCResponse Update(Complain complain)
+        public BCResponse GetComplainByUserId(int userId) //burayı düzenle
         {
-            throw new NotImplementedException();
-        }//burda bende hata var ben yanlış bişi eklemiştim sonra düzelticem
+            var result = _dalComplain.GetComplainByUserID(userId);
 
-        public List<Complain> GetComplainByUserId(int userId)
-        {
-            throw new NotImplementedException();
+            if (result != null)
+            {
+                return new BCResponse() { Value = result };
+            }
+
+            return new BCResponse() { Errors = "Kullanıcı Bulunamadı" };
         }
 
-        
     }
 
 }

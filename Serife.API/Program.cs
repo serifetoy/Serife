@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Identity;
+using Serife.Business.Concrete;
+using Serife.DataLayer;
+using Serife.DataLayer.Entity;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
