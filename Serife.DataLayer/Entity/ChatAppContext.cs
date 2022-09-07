@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Serife.DataLayer;
 
 namespace Serife.DataLayer.Entity
 {
@@ -30,8 +29,8 @@ namespace Serife.DataLayer.Entity
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=.;Database=ChatApp;Trusted_Connection=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=.;Database=ChatApp;User ID=sa; Password=123456;");
             }
         }
 
@@ -84,9 +83,7 @@ namespace Serife.DataLayer.Entity
             {
                 entity.ToTable("ComplainStatus");
 
-                entity.Property(e => e.ComplainStatusId)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("ComplainStatusID");
+                entity.Property(e => e.ComplainStatusId).HasColumnName("ComplainStatusID");
 
                 entity.Property(e => e.ComplainDescription)
                     .HasMaxLength(50)
@@ -212,7 +209,7 @@ namespace Serife.DataLayer.Entity
 
                 entity.Property(e => e.ReadDate).HasColumnType("datetime");
 
-                entity.Property(e => e.ReceiverId).HasColumnName("RecieverID");
+                entity.Property(e => e.RecieverId).HasColumnName("RecieverID");
 
                 entity.Property(e => e.SendDate).HasColumnType("datetime");
 
@@ -225,7 +222,7 @@ namespace Serife.DataLayer.Entity
 
                 entity.HasOne(d => d.Reciever)
                     .WithMany(p => p.MessageRecievers)
-                    .HasForeignKey(d => d.ReceiverId)
+                    .HasForeignKey(d => d.RecieverId)
                     .HasConstraintName("FK_Message_RecieverID");
 
                 entity.HasOne(d => d.Sender)

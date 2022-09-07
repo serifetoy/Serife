@@ -20,7 +20,7 @@ namespace Serife.API.Controllers
         }
 
 
-        [HttpPost("Complain/{complain}")]
+        [HttpPost]
 
         public IActionResult Add([FromBody] ComplainDTO dto)
         {
@@ -35,7 +35,7 @@ namespace Serife.API.Controllers
 
 
         
-        [HttpPut("Complain/update/{complain}")]
+        [HttpPut]
 
         public IActionResult Update([FromBody] ComplainDTO dto)
         {
@@ -49,7 +49,7 @@ namespace Serife.API.Controllers
         }
 
        
-        [HttpDelete("Complain/delete/{complainID}")]
+        [HttpDelete]
 
         public IActionResult Delete([FromBody] int userid)
         {
@@ -75,20 +75,20 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         } //liste döndürme hatası, complainmanager BCResponse yapılmalı fonksiyon değiştirilmeli
 
-        //[HttpGet("Complain/{complainID}")]
-        //
-        //public IActionResult GetById(int complainId)
-        //{
-        //    var result = _complainManager.GetById(complainId);
-        //    if (result.Errors != null)
-        //    {
-        //        return NotFound(result.Errors);
-
-        //    }
-        //    return Ok(result.Value);
-        //}
-
         [HttpGet("Complain/{complainID}")]
+
+        public IActionResult GetById(int complainId)//bu en son kaldırdığım comentten, urller farklı
+        {
+            var result = _complainManager.GetById(complainId);
+            if (result.Errors != null)
+            {
+                return NotFound(result.Errors);
+
+            }
+            return Ok(result.Value);
+        }
+
+        [HttpGet]//BURDA NEDEN URL YOK??
 
         public IActionResult GetListAll()
         {

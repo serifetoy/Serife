@@ -30,12 +30,6 @@ namespace Serife.Business.Concrete
                 return new BCResponse() { Errors = "Boyle bir grup bulunmaktadır" };
 
             }
-            isExists = _dalGroup.Any(name: dto.Name);
-            if (isExists)
-            {
-                return new BCResponse() { Errors = "Boyle bir grup ismi bulunmaktadır" };
-
-            }
 
             #endregion
 
@@ -84,7 +78,7 @@ namespace Serife.Business.Concrete
 
             }
             #endregion
-            return new BCResponse() { Errors = "Group silinemedi" };
+            return new BCResponse() { Errors = "Grup silinemedi" };
         }
 
         public BCResponse Update(GroupDTO dto)
@@ -102,7 +96,7 @@ namespace Serife.Business.Concrete
             }
             #endregion
             #region Map To Entity
-            Group? entity = _dalGroup.GetBy(id: dto.GroupId);
+            Group? entity = _dalGroup.GetById(id: dto.GroupId);
             if (entity == null)
             {
                 return new BCResponse() { Errors = "Group bulunamadı" };
@@ -126,9 +120,9 @@ namespace Serife.Business.Concrete
 
         }
 
-        public BCResponse GetBy(int userId)//BAKILMASI LAZIM 
+        public BCResponse GetById(int userId)//BAKILMASI LAZIM 
         {
-            var result = _dalGroup.GetBy(userId);
+            var result = _dalGroup.GetById(userId);
 
             if (result != null)
             {
@@ -137,19 +131,17 @@ namespace Serife.Business.Concrete
 
             return new BCResponse() { Errors = "Kullanıcı Bulunamadı" };
         }
-        public BCResponse GetList(int userId)
-        {
-            var result = _dalGroup.GetList(userId);
-            if (result.Count > 0)
-            {
-                return new BCResponse() { Value = result };
-            }
-            return new BCResponse() { Errors = "Kayıt Bulunamadı" };
-        }
+        
+        //public BCResponse GetList(int userId)
+        //{
+        //    var result = _dalGroup.GetList(userId);
+        //    if (result.Count > 0)
+        //    {
+        //        return new BCResponse() { Value = result };
+        //    }
+        //    return new BCResponse() { Errors = "Kayıt Bulunamadı" };
+        //}
 
-        BCResponse IGroupService.GetList(int id)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

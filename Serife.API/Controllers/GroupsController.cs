@@ -17,7 +17,7 @@ namespace Serife.API.Controllers
             _groupManager = groupManager;
         }
 
-        [HttpPost("Group/add/{group}")]
+        [HttpPost]
 
         public IActionResult Add([FromBody] GroupDTO group)
         {
@@ -30,7 +30,7 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpPut("Group/update/{group}")]
+        [HttpPut]
 
         public IActionResult Update([FromBody] GroupDTO group)//? var zorunlu değil 
         {
@@ -43,7 +43,7 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpDelete("Group/delete/{groupID}")]
+        [HttpDelete]
 
         public IActionResult Delete(int groupId)
         {
@@ -56,11 +56,11 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet("Group/{groupID}")]
+        [HttpGet]
 
         public IActionResult GetBy(int groupId)
         {
-            var result = _groupManager.GetBy(groupId);
+            var result = _groupManager.GetById(groupId);
             if (result.Errors != null)
             {
                 return NotFound(result.Errors);

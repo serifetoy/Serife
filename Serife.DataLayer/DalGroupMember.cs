@@ -31,7 +31,7 @@ namespace Serife.DataLayer
 
         }
 
-        public GroupMember? GetBy(int? id = null, int? groupMemberId = null, int? addedUserId = null)
+        public GroupMember? GetById(int? id = null, int? groupMemberId = null, int? addedUserId = null)
         {
 
             return chatAppContext.GroupMembers.

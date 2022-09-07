@@ -22,7 +22,7 @@ namespace Serife.API.Controllers
 
       
 
-        [HttpPost("Add")]
+        [HttpPost]
 
         public IActionResult Add([FromBody] FriendDTO dto)
         {
@@ -36,35 +36,35 @@ namespace Serife.API.Controllers
         }
 
 
-        //[HttpPut("Update")]
+        [HttpPut]
 
-        //public IActionResult Update(string friend)//?
-        //{
-        //    var result = _friendManager.Update(friend);
-        //    if (result.Errors != null)
-        //    {
-        //        return NotFound(result.Errors);
+        public IActionResult Update(FriendDTO friend)//DTO İLE Mİ ALINCAK TEYİT ET
+        {
+            var result = _friendManager.Update(friend);
+            if (result.Errors != null)
+            {
+                return NotFound(result.Errors);
 
-        //    }
-        //    return Ok(result.Value);
-        //}
-
-
-        //[HttpDelete("Delete")]
-
-        //public IActionResult Delete([FromBody] FriendDTO friendId)
-        //{
-        //    var result = _friendManager.Delete(friendId);
-        //    if (result.Errors != null)
-        //    {
-        //        return NotFound(result.Value);
-
-        //    }
-        //    return NotFound(result.Errors);
-        //}
+            }
+            return Ok(result.Value);
+        }
 
 
-        [HttpGet("GetList")]
+        [HttpDelete]
+
+        public IActionResult Delete([FromBody] int friendId)//İNTEGER MI DTO MU KONTROL ET
+        {
+            var result = _friendManager.Delete(friendId);
+            if (result.Errors != null)
+            {
+                return NotFound(result.Value);
+
+            }
+            return NotFound(result.Errors);
+        }
+
+
+        [HttpGet]
 
         public IActionResult GetList( int UserId)
         {

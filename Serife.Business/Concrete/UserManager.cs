@@ -149,7 +149,7 @@ namespace Serife.Business.Concrete
 
         }
 
-        public BCResponse GetUsers(UserDTO dto)//burayı düzenle
+        public BCResponse GetUsers()//burayı düzenle
         {
             //return chatAppContext.Set<User>().ToList();
             //throw new NotImplementedException();

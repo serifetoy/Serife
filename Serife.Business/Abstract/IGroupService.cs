@@ -11,8 +11,8 @@ namespace Serife.Business.Abstract
 {
     public interface IGroupService : IBaseService<GroupDTO>
     {
-        BCResponse GetList(int userId);
-        BCResponse GetBy(int userId);
+        //BCResponse GetList(int userId);
+        BCResponse GetById(int userId);
         
         
 

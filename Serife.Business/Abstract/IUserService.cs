@@ -11,7 +11,7 @@ namespace Serife.Business.Abstract
 {
     public interface IUserService : IBaseService<UserDTO>
     {
-        BCResponse GetUsers(UserDTO dto);
+        BCResponse GetUsers();
         BCResponse GetById(int userId);
         BCResponse GetByUserName(string userName);
     }

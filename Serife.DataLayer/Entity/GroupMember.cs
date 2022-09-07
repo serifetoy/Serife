@@ -15,6 +15,5 @@ namespace Serife.DataLayer.Entity
         public virtual User? AddedUser { get; set; }
         public virtual Group Group { get; set; } = null!;
         public virtual User User { get; set; } = null!;
-        
     }
 }

@@ -16,8 +16,6 @@ namespace Serife.DataLayer
                                  .Where(x => x.FriendId == id)
                                  .ToList();
         }
-
-
         public bool Any(int? friendId = null, int? requesterUserId = null, int? requestedUserId = null, byte? friendStatusId = null)
         {
 
@@ -47,5 +45,6 @@ namespace Serife.DataLayer
 
         }
 
+        
     }
 }

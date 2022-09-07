@@ -11,6 +11,6 @@ namespace Serife.Business.Abstract
 {
     public interface IGroupMemberService : IBaseService <GroupMemberDTO>
     {
-        BCResponse GetListAll();
+        BCResponse GetById(int id);
     }
 }

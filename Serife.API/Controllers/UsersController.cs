@@ -9,7 +9,7 @@ using Serife.DataLayer.Entity;
 
 namespace Serife.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("user")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace Serife.API.Controllers
         }
 
 
-        [HttpPost("User/{user}")]
+        [HttpPost("Add")]
 
         public IActionResult Add([FromBody] UserDTO user)
         {
@@ -48,7 +48,7 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpDelete("User/{userID}")]
+        [HttpDelete("Delete")]
 
         public IActionResult Delete(int userid)
         {
@@ -61,7 +61,7 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet("User/{userID}")]
+        [HttpGet("GetById/{userId}")]
 
         public IActionResult GetById(int userId)
         {
@@ -74,7 +74,7 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet("User/{username}")]
+        [HttpGet("GetByUserName/{username}")]
 
         public IActionResult GetByUserName(string userName)
         {
@@ -87,18 +87,19 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        //[HttpGet("User/{username}")]
+        [Route("/Users/GetUsers")]
+        [HttpGet]
 
-        //public IActionResult GetUsers(UserDTO dto)
-        //{
-        //    var result = _userManager.GetUsers(dto);
-        //    if (result.Errors != null)
-        //    {
-        //        return NotFound(result.Errors);
+        public IActionResult GetUsers( )
+        {
+            var result = _userManager.GetUsers();
+            if (result.Errors != null)
+            {
+                return NotFound(result.Errors);
 
-        //    }
-        //    return Ok(result.Value);
-        //}
+            }
+            return Ok(result.Value);
+        }
 
 
     }

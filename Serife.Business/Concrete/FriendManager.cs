@@ -77,7 +77,6 @@ namespace Serife.Business.Concrete
             #endregion
             return new BCResponse() { Errors = "Kullanıcı silinemedi" };
         }
-
         public BCResponse Update(FriendDTO dto)
         {
 
@@ -127,6 +126,8 @@ namespace Serife.Business.Concrete
             return new BCResponse() { Errors = "Kayıt Bulunamadı" };
         }
 
+        
 
+        
     }
 }

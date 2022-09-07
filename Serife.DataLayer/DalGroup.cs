@@ -30,7 +30,7 @@ namespace Serife.DataLayer
                             );
         }
 
-        public Group? GetBy(int? id = null, int? createrUserId = null, string? name = null)
+        public Group? GetById(int? id = null, int? createrUserId = null, string? name = null)
         {
 
             return chatAppContext.Groups.

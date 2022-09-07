@@ -16,7 +16,6 @@ namespace Serife.DataLayer
             chatAppContext.Set<TEntity>().Add(entity);
             return chatAppContext.SaveChanges();
         }
-
         public int Delete(TEntity entity)
         {
             chatAppContext.Set<TEntity>().Remove(entity);
@@ -30,11 +29,6 @@ namespace Serife.DataLayer
             chatAppContext.Set<TEntity>().Update(entity);
             return chatAppContext.SaveChanges();
 
-        }
-        public List<TEntity> GetListAll()
-        {
-            return chatAppContext.Set<TEntity>().ToList();
-            
         }
 
     }
