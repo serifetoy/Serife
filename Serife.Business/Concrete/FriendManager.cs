@@ -31,6 +31,48 @@ namespace Serife.Business.Concrete
 
             }
 
+            var requesterExists = _dalFriend.Any(requesterUserId: dto.RequesterUserId);
+            var requestExists = _dalFriend.Any(requesterUserId: dto.RequesterUserId, requestedUserId: dto.RequestedUserId);
+
+            //isExists = _dalFriend.Any(friendStatusId: dto.FriendStatusId);
+            //if (isExists)
+            //{
+            //    return new BCResponse() { Errors = "Sikayet edilme nedeni sistemde kayıtlıdır." };
+            //}
+            //
+            
+            
+            ////any kısmında byte olan veri tipini int yap 
+
+            if (requesterExists)
+            {
+                dto.FriendStatusId = 1;
+                
+                if (requestExists)
+                {
+                    dto.FriendStatusId = 2;
+                }
+                
+                else if (dto.FriendStatusId== 2)//onaylama
+                {
+
+                    return new BCResponse() { Value = "İstek onaylandı" };
+
+                }
+                
+                else if (isExists==false)//reddetme
+                {
+
+                    return new BCResponse() { Value = "İstek reddedildi" };
+                }
+
+                else//zaten istek attınız
+                {
+                    return new BCResponse() { Errors = "Zaten istek attınız." };
+                }
+            
+            }
+
             #endregion
             #region Map To Entity
             Friend entity = new Friend();
@@ -48,6 +90,7 @@ namespace Serife.Business.Concrete
             {
 
                 return new BCResponse() { Value = result };
+                //LİSTEDE GÖRÜNME KISMINI EKLEYCEĞİZ AMA HANGİ LİSTE
 
             }
             #endregion
@@ -64,6 +107,8 @@ namespace Serife.Business.Concrete
             #endregion
             #region Delete
             Friend? entity = chatAppContext.Friends.FirstOrDefault(u => u.FriendId == id);
+
+            //listeden silme kısmı eklenecek
 
 
             if (entity != null)
@@ -102,6 +147,11 @@ namespace Serife.Business.Concrete
             entity.RequestedDate = dto.RequestedDate;
 
             #endregion
+
+            //if (true)//kişiler listeye eklenicek, güncelleme
+            //{
+
+            //}
 
 
             #region Update

@@ -16,6 +16,8 @@ namespace Serife.Business.Concrete
         ChatAppContext chatAppContext = new ChatAppContext();
         DalGroupMember _dalGroupMember;
 
+     
+
         public GroupMemberManager(DalGroupMember dalGroupMember)
         {
             _dalGroupMember = dalGroupMember;
@@ -30,6 +32,7 @@ namespace Serife.Business.Concrete
                 return new BCResponse() { Errors = "Kişi grupta var olmaktadır." };
 
             }
+
             #endregion
 
             #region Map To Entity
@@ -58,8 +61,20 @@ namespace Serife.Business.Concrete
 
             #endregion
 
+           // var userExists = _dalGroupMember.Any(userId: dto.UserId);
+           // var groupExists = _dalGroupMember.Any(groupId: dto.GroupId);
+           //// var groupPhotoExists = _dalGroup.Any(groupPhotoId: dto.GroupProfilePhoto);
+           
 
-        }
+
+           // if ((userExists&&groupExists)&& dto.IsAdmin==true)
+           // {
+           //     return new BCResponse() { Value = "adminsin kişi ekleyebilir ve grup resmini değiştirebilirsin" };
+
+           //     //kişi ekleyebilir ve grup resmini değiştirebilir.
+           // }
+           // return new BCResponse() { Errors = "Böyle bir yetkiniz bulunmamaktadır" };
+        }//admin olma kısmı burada
 
         public BCResponse Delete(int id)
         {
@@ -81,7 +96,7 @@ namespace Serife.Business.Concrete
             return new BCResponse() { Errors = "Grup Üyesi silinemedi" };
         }
 
-        public BCResponse Update(GroupMemberDTO dto)
+        public BCResponse Update(GroupMemberDTO dto)//YAZILACAK
         {
             throw new NotImplementedException();
 

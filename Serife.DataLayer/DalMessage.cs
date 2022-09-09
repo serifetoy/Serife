@@ -56,9 +56,35 @@ namespace Serife.DataLayer
                             (!senderId.HasValue || x.SenderId == senderId) &&
                             (!receiverId.HasValue || x.RecieverId == receiverId) &&
                             (!groupId.HasValue || x.GroupId == groupId)
+                            
                             ).FirstOrDefault();
 
         }
+
+        public int GetMember(int? userId = null, int? groupId = null)
+        {
+
+           var user =chatAppContext.GroupMembers.
+                Where(x =>
+                            (!userId.HasValue || x.UserId == userId)                       
+                            ).FirstOrDefault();
+           var group = chatAppContext.Messages.
+               Where(x =>
+                           (!groupId.HasValue || x.GroupId == groupId)
+                           ).FirstOrDefault();
+
+            if(user != null && group!=null)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
+
 
         //public bool FindUser(int? senderId = null, int? receiverId = null)
         //{
