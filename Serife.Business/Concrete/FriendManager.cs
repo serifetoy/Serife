@@ -32,46 +32,42 @@ namespace Serife.Business.Concrete
             }
 
             var requesterExists = _dalFriend.Any(requesterUserId: dto.RequesterUserId);
-            var requestExists = _dalFriend.Any(requesterUserId: dto.RequesterUserId, requestedUserId: dto.RequestedUserId);
-
-            //isExists = _dalFriend.Any(friendStatusId: dto.FriendStatusId);
-            //if (isExists)
-            //{
-            //    return new BCResponse() { Errors = "Sikayet edilme nedeni sistemde kayıtlıdır." };
-            //}
-            //
+            var requestedExists = _dalFriend.Any(requestedUserId: dto.RequestedUserId);
+            isExists = _dalFriend.Any(friendStatusId: dto.FriendStatusId);
             
-            
-            ////any kısmında byte olan veri tipini int yap 
-
             if (requesterExists)
-            {
-                dto.FriendStatusId = 1;
+            {  
                 
-                if (requestExists)
+                if (requestedExists)
                 {
-                    dto.FriendStatusId = 2;
+                    return new BCResponse() { Value = "İstek karşılıklı olarak onaylandı" };
                 }
-                
-                else if (dto.FriendStatusId== 2)//onaylama
+
+                else if (dto.FriendStatusId == 2)
                 {
 
                     return new BCResponse() { Value = "İstek onaylandı" };
 
                 }
-                
-                else if (isExists==false)//reddetme
+
+                else if (dto.FriendStatusId == 3)
                 {
 
                     return new BCResponse() { Value = "İstek reddedildi" };
                 }
 
-                else//zaten istek attınız
+                else
                 {
                     return new BCResponse() { Errors = "Zaten istek attınız." };
-                }
-            
+                }             
+
             }
+
+
+
+            ////any kısmında byte olan veri tipini int yap 
+
+          
 
             #endregion
             #region Map To Entity
@@ -102,13 +98,12 @@ namespace Serife.Business.Concrete
             #region Business
             if (id <= 0)
             {
-                return new BCResponse() { Errors = "hatalı veri" };
+                return new BCResponse() { Errors = "Kullanıcı tanımlanamadı." };
             }
             #endregion
             #region Delete
             Friend? entity = chatAppContext.Friends.FirstOrDefault(u => u.FriendId == id);
 
-            //listeden silme kısmı eklenecek
 
 
             if (entity != null)
@@ -117,7 +112,6 @@ namespace Serife.Business.Concrete
                 return new BCResponse() { Value = entity };
 
             }
-
 
             #endregion
             return new BCResponse() { Errors = "Kullanıcı silinemedi" };
@@ -147,11 +141,6 @@ namespace Serife.Business.Concrete
             entity.RequestedDate = dto.RequestedDate;
 
             #endregion
-
-            //if (true)//kişiler listeye eklenicek, güncelleme
-            //{
-
-            //}
 
 
             #region Update
