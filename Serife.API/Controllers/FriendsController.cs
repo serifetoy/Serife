@@ -24,12 +24,12 @@ namespace Serife.API.Controllers
 
         [HttpPost]
 
-        public IActionResult Add([FromBody] FriendDTO dto)
+        public IActionResult Add([FromBody] FriendDTO dto)//değiştirdik
         {
             var result = _friendManager.Add(dto);
-            if (result.Errors != null)
+            if (result.Errors == null)
             {
-                return NotFound(result.Value);
+                return Ok(result.Value);
 
             }
             return NotFound(result.Errors);
@@ -60,7 +60,7 @@ namespace Serife.API.Controllers
                 return NotFound(result.Value);
 
             }
-            return NotFound(result.Errors);
+            return Ok(result.Errors);
         }
 
 

@@ -28,6 +28,8 @@ namespace Serife.DataLayer
 
         }
 
+        
+
         public Friend? GetBy(int? friendId = null, int? requesterUserId = null, int? requestedUserId = null, byte? friendStatusId = null)
         {
 
@@ -39,12 +41,18 @@ namespace Serife.DataLayer
                             (!requestedUserId.HasValue || x.RequestedUserId == requestedUserId)
                             ).FirstOrDefault();
 
-
-
-
-
         }
 
-        
+        public Friend? GetFriend(int? from, int? to)
+        {
+            return chatAppContext.
+                Friends.
+                FirstOrDefault(c => (c.RequesterUserId == to && c.RequestedUserId == from));
+        }
+
+
+
+
+
     }
 }

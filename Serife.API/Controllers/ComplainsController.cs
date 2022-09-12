@@ -45,7 +45,7 @@ namespace Serife.API.Controllers
                 return NotFound(result.Value);
 
             }
-            return NotFound(result.Errors);
+            return Ok(result.Errors);
         }
 
        
@@ -59,7 +59,7 @@ namespace Serife.API.Controllers
                 return NotFound(result.Value);
 
             }
-            return NotFound(result.Errors);
+            return Ok(result.Errors);
         }
 
         [HttpGet("user/{userID}/Complain")]

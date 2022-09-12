@@ -20,7 +20,7 @@ namespace Serife.API.Controllers
 
         [HttpPost]
 
-        public IActionResult SendMessage([FromBody] MessageDTO message)//fromquery 
+        public IActionResult SendMessage([FromBody] MessageDTO message)
         {
             var result = _messageManager.SendMessage(message);
             if (result.Errors != null)

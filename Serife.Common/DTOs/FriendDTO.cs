@@ -15,10 +15,11 @@ namespace Serife.Common.DTOs
         public int RequesterUserId { get; set; }
         [Required()]
         public DateTime RequestedDate { get; set; }
-        public int RequestedUserId { get; set; }    
+        [Required()]
+        public int RequestedUserId { get; set; }
+        [Required()]
         public byte FriendStatusId { get; set; }
         
-
 
     } 
 }

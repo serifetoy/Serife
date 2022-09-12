@@ -25,12 +25,7 @@ namespace Serife.DataLayer
             return chatAppContext.Set<Message>()
                                  .Where(m => m.SenderId == senderId && m.GroupId == groupId)
                                  .ToList();
-        }
-
-        public Message SendMessage(Message message)
-        {
-            return message;
-        }
+        }    
 
 
         public bool Any(int? messageId = null, int? senderId = null, int? receiverId = null)
@@ -84,6 +79,45 @@ namespace Serife.DataLayer
 
         }
 
+
+     
+
+        //public int getMember(int? senderId = null, int? groupId = null)
+        //{
+        //    var sender = chatAppContext.Messages.
+        //       Where(x =>
+        //                   (!senderId.HasValue || x.SenderId == senderId)
+        //                   ).FirstOrDefault();
+            
+        //    var group = chatAppContext.GroupMembers.
+        //        Where(x =>
+        //                    (!groupId.HasValue || x.GroupId == groupId)
+        //                    ).FirstOrDefault();
+
+            
+            
+        //    if (sender != null && group != null)
+        //    {
+        //        return 1;
+        //    }
+        //    else
+        //    {
+        //        return 0;
+        //    }
+
+        //}
+
+        public GroupMember? getMember(int? userId, int? groupId)
+        {
+            return chatAppContext.GroupMembers
+                .FirstOrDefault(c => c.UserId == userId && c.GroupId == groupId);
+        }
+        public Friend? GetFriend(int? senderId = null, int? receiverId = null)
+        {
+            return chatAppContext.
+                Friends.
+                FirstOrDefault(c => c.RequesterUserId == senderId && c.RequestedUserId == receiverId);
+        }
 
 
         //public bool FindUser(int? senderId = null, int? receiverId = null)

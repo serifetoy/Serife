@@ -91,7 +91,7 @@ namespace Serife.Business.Concrete
 
             if (message.GroupId==0)
             {
-                var isFriend = _dalMessage.GetBy(senderId: message.SenderId, receiverId: message.RecieverId);
+                var isFriend = _dalMessage.GetFriend(senderId: message.SenderId, receiverId: message.RecieverId);
                 if (isFriend==null)
                 {
                     return new BCResponse() { Errors = "Arkadaş olunmayan kişiye mesaj gönderilemez." };
@@ -101,10 +101,11 @@ namespace Serife.Business.Concrete
                 newMessage.RecieverId = message.RecieverId;
                 newMessage.MessageContent = message.MessageContent;
                 newMessage.SendDate = message.SendDate;
+                newMessage.ReadDate = message.ReadDate;
             }
-            else if (message.RecieverId==0)
+            else if (message.RecieverId ==0)
             {
-                var isGroup = _dalMessage.GetBy(senderId: message.SenderId, groupId: message.GroupId);
+                var isGroup = _dalMessage.getMember(userId: message.SenderId, groupId: message.GroupId);            
                 if (isGroup == null)
                 {
                     return new BCResponse() { Errors = "Grupta olmayan kullanıcı gruba mesaj gönderemez" };
@@ -113,6 +114,7 @@ namespace Serife.Business.Concrete
                 newMessage.GroupId = message.GroupId;
                 newMessage.MessageContent = message.MessageContent;
                 newMessage.SendDate = message.SendDate;
+                newMessage.ReadDate = message.ReadDate;
 
             }
             else
@@ -124,8 +126,8 @@ namespace Serife.Business.Concrete
             #endregion
 
 
-            var result = _dalMessage.SendMessage(newMessage);
-            if (result != null)
+            var result = _dalMessage.Add(newMessage);
+            if (result >0)
             {
                 return new BCResponse() { Value = result };
             }

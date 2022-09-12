@@ -14,9 +14,7 @@ namespace Serife.Business.Concrete
     public class GroupMemberManager : IGroupMemberService
     {
         ChatAppContext chatAppContext = new ChatAppContext();
-        DalGroupMember _dalGroupMember;
-
-     
+        DalGroupMember _dalGroupMember;   
 
         public GroupMemberManager(DalGroupMember dalGroupMember)
         {
@@ -29,9 +27,24 @@ namespace Serife.Business.Concrete
             var isExists = _dalGroupMember.Any(groupMemberId: dto.GroupMemberId);
             if (isExists)
             {
-                return new BCResponse() { Errors = "Kişi grupta var olmaktadır." };
+                return new BCResponse() { Errors = "Kişiyi tekrar ekleyemezsiniz,kişi zaten grupta bulunmaktadır." };
 
             }
+         
+                var adminExists = _dalGroupMember.Any(userId: dto.UserId, groupId: dto.GroupId);       
+
+            if (adminExists)
+            {
+                if (dto.IsAdmin == true)
+                {
+                    return new BCResponse() { Value = "Grup yöneticisisin, kişi ekleyebilir ve grup resmini değiştirebilirsin" };
+                }
+
+                return new BCResponse() { Value = "Grupta yönetici değil üyesiniz." };
+
+
+            }
+           
 
             #endregion
 
@@ -45,35 +58,18 @@ namespace Serife.Business.Concrete
             entity.IsAdmin = dto.IsAdmin;
             #endregion
 
-            #region Insert
-            if (entity.AddedUserId < 0)
-            {
-                var result = _dalGroupMember.Add(entity);
-                if (result > 0)
-                {
-                    return new BCResponse() { Value = result };
-                }
 
-                return new BCResponse() { Errors = "Sistem Hatası" };
+            var result = _dalGroupMember.Add(entity);
+            if (result > 0)
+            {
+                return new BCResponse() { Value = result };
             }
 
-            return new BCResponse() { Errors = "Gereklilikler sağlanamadı" };
-
-            #endregion
-
-           // var userExists = _dalGroupMember.Any(userId: dto.UserId);
-           // var groupExists = _dalGroupMember.Any(groupId: dto.GroupId);
-           //// var groupPhotoExists = _dalGroup.Any(groupPhotoId: dto.GroupProfilePhoto);
-           
+            return new BCResponse() { Errors = "Sistem Hatası" };
 
 
-           // if ((userExists&&groupExists)&& dto.IsAdmin==true)
-           // {
-           //     return new BCResponse() { Value = "adminsin kişi ekleyebilir ve grup resmini değiştirebilirsin" };
 
-           //     //kişi ekleyebilir ve grup resmini değiştirebilir.
-           // }
-           // return new BCResponse() { Errors = "Böyle bir yetkiniz bulunmamaktadır" };
+
         }//admin olma kısmı burada
 
         public BCResponse Delete(int id)
@@ -113,5 +109,8 @@ namespace Serife.Business.Concrete
             return new BCResponse() { Errors = "Kayıt Bulunamadı" };
 
         }
+
+
+
     }
 }
