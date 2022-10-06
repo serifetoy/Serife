@@ -50,17 +50,18 @@ namespace Serife.API.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpDelete("Delete")]
 
-        public IActionResult Delete([FromBody] int friendId)//İNTEGER MI DTO MU KONTROL ET
+        public IActionResult Delete(int friendId)//İNTEGER MI DTO MU KONTROL ET
         {
             var result = _friendManager.Delete(friendId);
-            if (result.Errors != null)
+            if (result.Errors == null)
             {
-                return NotFound(result.Value);
+                return Ok(result.Value);
 
             }
-            return Ok(result.Errors);
+            return NotFound(result.Errors);
+            
         }
 
 

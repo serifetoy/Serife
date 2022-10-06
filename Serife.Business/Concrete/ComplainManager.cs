@@ -28,28 +28,10 @@ namespace Serife.Business.Concrete
             #region Business
 
             var isExists = _dalComplain.FindMessage(messageId: dto.MessageReferenceId);
-            if (!isExists)
+            if (isExists == null)
             {
                 return new BCResponse() { Errors = "Mesajlaşma yoktur." };
 
-            }
-
-            isExists = _dalComplain.Any(complainedOfUserId: dto.ComplainedOfUserId);
-            if (isExists)
-            {
-                return new BCResponse() { Errors = "Sikayet edilen kişi sistemde kayıtlıdır." };
-
-            }
-            isExists = _dalComplain.Any(complainantUserId: dto.ComplainantUserId);
-            if (isExists)
-            {
-                return new BCResponse() { Errors = "Sikayetçi kişi sistemde kayıtlıdır." };
-
-            }
-            isExists = _dalComplain.Any(complainStatusId: dto.ComplainStatusId);
-            if (isExists)
-            {
-                return new BCResponse() { Errors = "Sikayet edilme nedeni sistemde kayıtlıdır." };
             }
             #endregion
 
@@ -59,6 +41,7 @@ namespace Serife.Business.Concrete
             entity.ComplainStatusId = dto.ComplainStatusId;
             entity.ComplainedOfUserId = dto.ComplainedOfUserId;
             entity.ComplainDate = dto.ComplainDate;
+            entity.MessageReferenceId = dto.MessageReferenceId;
             #endregion
 
 
@@ -119,26 +102,32 @@ namespace Serife.Business.Concrete
 
         public BCResponse Update(ComplainDTO dto)
         {
-            #region Business
-            if (dto.ComplainId <= 0)
+            //#region Business
+            //if (dto.ComplainId<= 0)
+            //{
+            //    return new BCResponse() { Errors = "hatalı veri" };
+            //}
+            var isExists = _dalComplain.FindMessage(messageId: dto.MessageReferenceId);
+            if (isExists == null)
             {
-                return new BCResponse() { Errors = "hatalı veri" };
+                return new BCResponse() { Errors = "Mesajlaşma yoktur, update edemezsiniz" };
+
             }
 
-            var isExists = _dalComplain.Any(complainStatusId: dto.ComplainStatusId);
+            //var isExists = _dalComplain.Any(complainStatusId: dto.ComplainStatusId);
 
-            if (isExists)
-            {
-                return new BCResponse() { Errors = "Aynı şikayet nedeni sistemde kayıtlıdır." };
-            }
+            //if (isExists)
+            //{
+            //    return new BCResponse() { Errors = "Aynı şikayet nedeni sistemde kayıtlıdır." };
+            //}
 
-            isExists = _dalComplain.Any(complainedOfUserId: dto.ComplainedOfUserId);
-            if (isExists)
-            {
+            //isExists = _dalComplain.Any(complainedOfUserId: dto.ComplainedOfUserId);
+            //if (isExists)
+            //{
 
-                return new BCResponse() { Errors = "Şikayet edilen kişi zaten sistemde kayıtlıdır." };
-            }
-            #endregion
+            //    return new BCResponse() { Errors = "Şikayet edilen kişi zaten sistemde kayıtlıdır." };
+            //}
+            // #endregion
 
             #region Map To Entity
             Complain? entity = _dalComplain.GetBy(complainId: dto.ComplainId);
@@ -151,6 +140,7 @@ namespace Serife.Business.Concrete
             entity.ComplainStatusId = dto.ComplainStatusId;
             entity.ComplainedOfUserId = dto.ComplainedOfUserId;
             entity.ComplainDate = dto.ComplainDate;
+            entity.MessageReferenceId = dto.MessageReferenceId;
 
 
             #endregion

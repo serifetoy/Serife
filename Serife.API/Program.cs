@@ -31,7 +31,36 @@ builder.Services.AddScoped<GroupManager>();
 builder.Services.AddScoped<DalGroupMember>();
 builder.Services.AddScoped<GroupMemberManager>();
 
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsAllowAll",
+        builder =>
+        {
+            builder.AllowAnyMethod()
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true);
+
+        });
+});
+
+//    builder.Services.AddCors(options =>
+//    {
+//        options.AddDefaultPolicy(builder =>
+//        builder.WithOrigins("http://www.localhost:34352")
+//            .AllowAnyMethod()
+//            .AllowAnyHeader());
+//    });
+
 var app = builder.Build();
+app.UseCors("CorsAllowAll");
+
+
+
+app.UseRouting();
+
+
 
 
 // Configure the HTTP request pipeline.

@@ -16,22 +16,18 @@ namespace Serife.Business.Concrete
         {
             ChatAppContext chatAppContext = new ChatAppContext();
             DalMessage _dalMessage;
-
             public MessageManager(DalMessage dalMessage)
             {
                 _dalMessage = dalMessage;
             }
-
             public BCResponse Add(MessageDTO dto)
             {
                 throw new NotImplementedException();
             }
-
             public BCResponse Update(MessageDTO dto)
             {
                 throw new NotImplementedException();
             }
-
             public BCResponse Delete(int id)
             {
             #region Business
@@ -57,19 +53,15 @@ namespace Serife.Business.Concrete
 
 
             }
-
             public BCResponse GetGroupMessage(int UserId, int GroupId)
             {
                 var isExistGroup = _dalMessage.GetMember(userId: UserId, groupId: GroupId);
-
-
-                if (isExistGroup==1)
+                if (isExistGroup!=null)
             {
                     return new BCResponse() { Value = isExistGroup };
                 }
-                return new BCResponse() { Errors = "Group Mesajı alınamadı" };
+                return new BCResponse() { Errors = "Grup Mesajı alınamadı" };
             }
-
             public BCResponse GetPrivateMessage(int SenderId, int ReceiverId)
             {
                 var senderResult = _dalMessage.GetBy(senderId: SenderId);
@@ -81,8 +73,7 @@ namespace Serife.Business.Concrete
                     return new BCResponse() { Value = senderResult };
                 }
                 return new BCResponse() { Errors = "İki kişi arasında mesaj bulunamadı." };
-            }
-        
+            }     
             public BCResponse SendMessage(MessageDTO message) // TEKRAR BAK! 
         {
 
@@ -134,11 +125,7 @@ namespace Serife.Business.Concrete
 
             return new BCResponse() { Errors = "Sistem Hatası" };
         }
-
-        
-        
-    
-        
-    }
-    }
+       
+        }
+}
 

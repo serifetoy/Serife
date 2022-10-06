@@ -23,51 +23,44 @@ namespace Serife.Business.Concrete
 
         public BCResponse Add(GroupMemberDTO dto)
         {
-            #region Business
-            var isExists = _dalGroupMember.Any(groupMemberId: dto.GroupMemberId);
+            #region Business        
+            
+            var isExists = _dalGroupMember.Any(addedUserId: dto.AddedUserId, groupId: dto.GroupId);
             if (isExists)
             {
                 return new BCResponse() { Errors = "Kişiyi tekrar ekleyemezsiniz,kişi zaten grupta bulunmaktadır." };
-
             }
          
-                var adminExists = _dalGroupMember.Any(userId: dto.UserId, groupId: dto.GroupId);       
+            var adminExists = _dalGroupMember.Any(userId: dto.UserId, groupId: dto.GroupId);       
 
             if (adminExists)
             {
                 if (dto.IsAdmin == true)
                 {
-                    return new BCResponse() { Value = "Grup yöneticisisin, kişi ekleyebilir ve grup resmini değiştirebilirsin" };
+                    #region Map To Entity
+                    GroupMember entity = new GroupMember();
+                   
+                    entity.GroupId = dto.GroupId;
+                    entity.UserId = dto.UserId;
+                    entity.AddedUserId = dto.AddedUserId;
+                    entity.AddedDate = dto.AddedDate;
+                    entity.IsAdmin = dto.IsAdmin;
+                    #endregion
+
+                    var result = _dalGroupMember.Add(entity);
+                    if (result > 0)
+                    {
+                        return new BCResponse() { Value = result };
+                    }
+                    
+                    //return new BCResponse() { Value = "Grup yöneticisisin, kişi ekleyebilir ve grup resmini değiştirebilirsin" };
                 }
 
                 return new BCResponse() { Value = "Grupta yönetici değil üyesiniz." };
-
-
             }
            
-
-            #endregion
-
-            #region Map To Entity
-            GroupMember entity = new GroupMember();
-            entity.GroupMemberId = dto.GroupMemberId;
-            entity.GroupId = dto.GroupId;
-            entity.UserId = dto.UserId;
-            entity.AddedUserId = dto.AddedUserId;
-            entity.AddedDate = dto.AddedDate;
-            entity.IsAdmin = dto.IsAdmin;
-            #endregion
-
-
-            var result = _dalGroupMember.Add(entity);
-            if (result > 0)
-            {
-                return new BCResponse() { Value = result };
-            }
-
+            #endregion       
             return new BCResponse() { Errors = "Sistem Hatası" };
-
-
 
 
         }//admin olma kısmı burada
@@ -94,19 +87,43 @@ namespace Serife.Business.Concrete
 
         public BCResponse Update(GroupMemberDTO dto)//YAZILACAK
         {
-            throw new NotImplementedException();
+            var userExists = _dalGroupMember.Any(userId: dto.UserId);
+            if (!userExists)
+            {
+                return new BCResponse() { Errors = "Kullanıcı bulunamadı" };
+
+            }
+
+            #region Map To Entity
+            GroupMember entity = new GroupMember();
+            entity.GroupMemberId = dto.GroupMemberId;
+            entity.GroupId = dto.GroupId;
+            entity.UserId = dto.UserId;
+            entity.AddedUserId = dto.AddedUserId;
+            entity.AddedDate = dto.AddedDate;
+            entity.IsAdmin = dto.IsAdmin;
+            #endregion
+
+
+            var result = _dalGroupMember.Update(entity);
+            if (result > 0)
+            {
+                return new BCResponse() { Value = result };
+            }
+
+            return new BCResponse() { Errors = "Sistem Hatası" };
 
         }
 
         public BCResponse GetById(int id)
         {
             var result = _dalGroupMember.GetById(id);
-           
             if (result != null)
             {
                 return new BCResponse() { Value = result };
+
             }
-            return new BCResponse() { Errors = "Kayıt Bulunamadı" };
+            return new BCResponse() { Errors = "Bu id'ye ait grup üyesi bulunamadı" };
 
         }
 

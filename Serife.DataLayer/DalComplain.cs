@@ -16,12 +16,14 @@ namespace Serife.DataLayer
 
         public Complain? GetById(int id)
         {
-            var values = chatAppContext.Set<Complain>().Find(id);
-            if (values != null)
-            {
-                return values;
-            }
-            return null;
+
+            return chatAppContext.Set<Complain>().FirstOrDefault(x => x.ComplainId == id);
+            //var values = chatAppContext.Set<Complain>().Find(id);
+            //if (values != null)
+            //{
+            //    return values;
+            //}
+            //return null;
         }
         public List<Complain> GetComplainByUserID(int id)
         {
@@ -47,7 +49,7 @@ namespace Serife.DataLayer
                             (!complainedOfUserId.HasValue || x.ComplainedOfUserId == complainedOfUserId) &&
                             (!complainantUserId.HasValue || x.ComplainantUserId == complainantUserId) &&
                             (!complainStatusId.HasValue || x.ComplainStatusId == complainStatusId));
-            //  (string.IsNullOrEmpty(userName) || x.Username == userName)
+           
 
 
         }
@@ -65,26 +67,17 @@ namespace Serife.DataLayer
 
         }
 
-        public bool FindMessage(int? messageId = null)
+        public Message? FindMessage(int? messageId = null)
         {
 
-            return chatAppContext.Messages.
-                Any(x =>
-                            (!messageId.HasValue || x.MessageId == messageId));
+            //return chatAppContext.Messages.
+            //    Any(x =>
+            //                (!messageId.HasValue || x.MessageId == messageId));
+
+            return chatAppContext.Messages.Find(messageId);
 
         }
 
     }
 
-
-
-    //public Complain? GetById(int id)
-    //{
-    //    var values = chatAppContext.Set<Complain>().Find(id);
-    //    if (values != null)
-    //    {
-    //        return values;
-    //    }
-    //    return null;
-    //}
 }

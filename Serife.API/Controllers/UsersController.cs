@@ -74,7 +74,7 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet("GetByUserName/{username}")]
+        [HttpGet("GetByUserName/{userName}")]
 
         public IActionResult GetByUserName(string userName)
         {

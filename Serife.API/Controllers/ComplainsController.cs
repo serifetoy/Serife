@@ -6,80 +6,57 @@ using Serife.Common.DTOs;
 
 namespace Serife.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("Complain")]
     [ApiController]
     public class ComplainsController : ControllerBase
     {
-       
         ComplainManager _complainManager;
-        
 
         public ComplainsController(ComplainManager complainManager)
         {
             _complainManager = complainManager;
         }
 
-
-        [HttpPost]
-
+        [HttpPost("Add")]
         public IActionResult Add([FromBody] ComplainDTO dto)
         {
             var result = _complainManager.Add(dto);
-            if (result.Errors != null)
+            if (result.Errors == null)
             {
-                return NotFound(result.Value);
+                return Ok(result.Value);
+
 
             }
-            return Ok(result.Errors);
+            return NotFound(result.Errors);
+        }
+        [HttpDelete("Delete")]
+        public IActionResult Delete(int id)
+        {
+            var result = _complainManager.Delete(id);
+            if (result.Errors == null)
+            {
+                return NotFound(result.Errors);
+
+            }
+            return Ok(result.Value);
         }
 
-
-        
-        [HttpPut]
-
+        [HttpPut("Update")]
         public IActionResult Update([FromBody] ComplainDTO dto)
         {
             var result = _complainManager.Update(dto);
             if (result.Errors != null)
             {
-                return NotFound(result.Value);
-
-            }
-            return Ok(result.Errors);
-        }
-
-       
-        [HttpDelete]
-
-        public IActionResult Delete([FromBody] int userid)
-        {
-            var result = _complainManager.Delete(userid);
-            if (result.Errors != null)
-            {
-                return NotFound(result.Value);
-
-            }
-            return Ok(result.Errors);
-        }
-
-        [HttpGet("user/{userID}/Complain")]
-
-        public IActionResult GetComplainByUserId(int userId)
-        {
-            var result = _complainManager.GetComplainByUserId(userId);
-            if (result.Errors != null)
-            {
                 return NotFound(result.Errors);
 
             }
             return Ok(result.Value);
-        } //liste döndürme hatası, complainmanager BCResponse yapılmalı fonksiyon değiştirilmeli
+        }
 
-        [HttpGet("Complain/{complainID}")]
-
-        public IActionResult GetById(int complainId)//bu en son kaldırdığım comentten, urller farklı
+        [HttpGet("GetById/{id}")]
+        public IActionResult GetById(int id)
         {
-            var result = _complainManager.GetById(complainId);
+            var result = _complainManager.GetById(id);
             if (result.Errors != null)
             {
                 return NotFound(result.Errors);
@@ -88,8 +65,8 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet]//BURDA NEDEN URL YOK??
 
+        [HttpGet("GetListAll")]
         public IActionResult GetListAll()
         {
             var result = _complainManager.GetListAll();
@@ -101,5 +78,16 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
+        [HttpGet("getcomplainbyuserıd/{id}")]
+        public IActionResult GetComplainByUserID(int id)
+        {
+            var result = _complainManager.GetComplainByUserId(id);
+            if (result.Errors != null)
+            {
+                return NotFound(result.Errors);
+
+            }
+            return Ok(result.Value);
+        }
     }
 }

@@ -1,0 +1,94 @@
+﻿@page "/users"
+
+<h3>User</h3>
+<PageTitle>Users</PageTitle>
+
+<h1>Users</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (data == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>UserId</th>
+                <th>CreateDate</th>
+                <th>Name</th>
+                <th>Surname</th>
+             @*   <th>Username</th>
+                <th>Email</th>
+                <th>Password</th>                
+                <th>ProfilePhoto</th>
+                <th>IsActive</th>
+                <th>IsAdmin</th>*@
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in data)
+            {
+                <tr>
+                    <td>@user.userId</td>
+                    <td>@user.name</td>
+                    <td>@user.surname</td>
+                    <td>@user.username</td>
+                    @*<td>@user.Username</td>
+                    <td>@user.Email</td>
+                    <td>@user.Password</td>
+                    <td>@user.ProfilePhoto</td>
+                    <td>@user.IsActive</td>
+                    <td>@user.IsAdmin</td>*@
+                                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    public List<Root> data;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //HttpClient client = new HttpClient();
+
+        
+        data = await _http.GetFromJsonAsync<List<Root>>("Users/GetUsers");
+        //data = await _http.GetFromJsonAsync<List<>>("user/Add");
+    }
+   
+
+     public class Root
+    {
+        public int userId { get; set; }
+        public DateTime createDate { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public string username { get; set; }
+        public string email { get; set; }
+        public string password { get; set; }
+        public string profilePhoto { get; set; }
+        public bool isActive { get; set; }
+        public bool isAdmin { get; set; }
+        public object complainComplainNavigation { get; set; }
+        public List<object> complainComplainantUsers { get; set; }
+        public List<object> friendRequestedUsers { get; set; }
+        public List<object> friendRequesterUsers { get; set; }
+        public List<object> groupMemberAddedUsers { get; set; }
+        public List<object> groupMemberUsers { get; set; }
+        public List<object> groups { get; set; }
+        public List<object> messageRecievers { get; set; }
+        public List<object> messageSenders { get; set; }
+    }
+
+
+ 
+
+    
+}

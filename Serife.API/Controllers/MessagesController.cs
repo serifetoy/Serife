@@ -45,7 +45,7 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet("user/{senderId}/groupchat/{receiverId}")] //URL BAK
+        [HttpGet("user/{senderId}/groupchat/{receiverId}/Message")]
         public IActionResult GetPrivateMessage(int senderId, int receiverId)
         {
             var result = _messageManager.GetPrivateMessage(senderId, receiverId);
@@ -57,10 +57,11 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
 
         }
-        [HttpGet("user/{senderID}/groupchat/{groupID}")] //URL BAK
+        [HttpGet("user/{senderId}/groupchat/{groupId}")] //URL BAK
         public IActionResult GetGroupMessage(int senderId, int groupId)
         {
-            var result = _messageManager.GetPrivateMessage(senderId, groupId);
+            var result = _messageManager.GetGroupMessage(senderId, groupId);
+            
             if (result.Errors != null)
             {
                 return BadRequest(result.Errors);

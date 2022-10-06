@@ -38,7 +38,9 @@ namespace Serife.DataLayer
                 Where(x =>
                             (!id.HasValue || x.GroupId == id) &&
                             (!groupMemberId.HasValue || x.GroupMemberId == groupMemberId) &&
-                            (addedUserId.HasValue || x.AddedUserId == addedUserId)).FirstOrDefault();
+                            (!addedUserId.HasValue || x.AddedUserId == addedUserId)).FirstOrDefault();
+
+
 
         }
 

@@ -67,27 +67,26 @@ namespace Serife.Business.Concrete
 
         public BCResponse Delete(int id)
             {
-                #region Business
-                if (id <= 0)
-                {
-                    return new BCResponse() { Errors = "Kullanıcı tanımlanamadı." };
-                }
-                #endregion
-                #region Delete
-                Friend? entity = chatAppContext.Friends.FirstOrDefault(u => u.FriendId == id);
-
-
-
-                if (entity != null)
-                {
-                    _dalFriend.Delete(entity);
-                    return new BCResponse() { Value = entity };
-
-                }
-
-                #endregion
-                return new BCResponse() { Errors = "Kullanıcı silinemedi" };
+            #region Business
+            if (id <= 0)
+            {
+                return new BCResponse() { Errors = "hatalı veri" };
             }
+            #endregion
+            #region Delete
+            Friend? entity = chatAppContext.Friends.FirstOrDefault(u => u.FriendId == id);
+
+
+            if (entity != null)
+            {
+                _dalFriend.Delete(entity);
+                return new BCResponse() { Value = entity };
+
+            }
+
+            #endregion
+            return new BCResponse() { Errors = "Kullanıcı silinemedi" };
+        }
         public BCResponse Update(FriendDTO dto)
             {
 
@@ -105,8 +104,6 @@ namespace Serife.Business.Concrete
                 {
                     return new BCResponse() { Errors = "arkadaş bulunamadı" };
                 }
-
-                entity.FriendId = dto.FriendId;
                 entity.RequesterUserId = dto.RequesterUserId;
                 entity.RequestedUserId = dto.RequestedUserId;
                 entity.FriendStatusId = dto.FriendStatusId;

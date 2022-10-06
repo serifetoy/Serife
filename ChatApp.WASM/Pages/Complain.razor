@@ -1,0 +1,86 @@
+﻿@page "/complain"
+
+
+<h3>User</h3>
+<PageTitle>Users</PageTitle>
+
+<h1>Users</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (data == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>complainId</th>
+                <th>complainantUserId</th>
+                <th>complainedOfUserId</th>
+                <th>complainStatusId</th>
+                <th>complainDate</th>
+                @*<th>Email</th>
+                <th>Password</th>                
+                <th>ProfilePhoto</th>
+                <th>IsActive</th>
+                <th>IsAdmin</th>*@
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in data)
+            {
+                <tr>
+                    <td>@user.complainId</td>
+                    <td>@user.complainantUserId</td>
+                    <td>@user.complainedOfUserId</td>
+                    <td>@user.complainStatusId</td>
+                    <td>@user.complainDate</td>
+                    @*<td>@user.messageReferenceId</td>
+                    <td>@user.complainNavigation</td>
+                    <td>@user.complainStatus</td>
+                    <td>@user.complainantUser</td>
+                    <td>@user.messageReference</td>*@
+                                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    public List<Root> data;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //HttpClient client = new HttpClient();
+
+        
+        data = await _http.GetFromJsonAsync<List<Root>>("Complain/GetListAll");
+        //data = await _http.GetFromJsonAsync<List<>>("user/Add");
+    }
+   
+
+    public class Root
+    {
+        public int complainId { get; set; }
+        public int complainantUserId { get; set; }
+        public int complainedOfUserId { get; set; }
+        public int complainStatusId { get; set; }
+        public DateTime complainDate { get; set; }
+        public int messageReferenceId { get; set; }
+        public object complainNavigation { get; set; }
+        public object complainStatus { get; set; }
+        public object complainantUser { get; set; }
+        public object messageReference { get; set; }
+    }
+
+
+ 
+
+    
+}

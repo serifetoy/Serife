@@ -52,7 +52,7 @@ namespace Serife.API.Controllers
             return Ok(result.Value);
         }
 
-        [HttpGet]
+        [HttpGet("GetById/{groupId}")]
         public IActionResult GetById(int groupId)
         {
             var result = _groupMemberManager.GetById(groupId);
